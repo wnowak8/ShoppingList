@@ -1,11 +1,19 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPlus } from "@fortawesome/free-solid-svg-icons";
 
-export const Form = ({ addProduct }) => {
+export const Form = ({ addProduct, initialData, setEditingProduct }) => {
   const [name, setName] = useState("");
   const [category, setCategory] = useState("");
   const [quantity, setQuantity] = useState(1);
+
+  useEffect(() => {
+    if (initialData) {
+      setName(initialData.name || "");
+      setCategory(initialData.category || "");
+      setQuantity(initialData.quantity || 1);
+    }
+  }, [initialData]);
 
   const categoryOptions = ["electronics", "clothing", "groceries"];
 
@@ -16,6 +24,7 @@ export const Form = ({ addProduct }) => {
       setName("");
       setCategory("");
       setQuantity(1);
+      setEditingProduct(null);
     }
   };
 
@@ -41,7 +50,7 @@ export const Form = ({ addProduct }) => {
           <option key={option} value={option}>
             {option}
           </option>
-        ))}{" "}
+        ))}
       </select>
       <input
         type="number"

@@ -1,74 +1,65 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Product } from "./Product";
 import { Form } from "./Form";
-import { v4 as uuidv4 } from "uuid";
-import { EditForm } from "./EditForm";
+import {
+  getAllProducts,
+  addProduct,
+  editProduct,
+  deleteProduct,
+} from "../utils/HandleApi";
 
 export const Wrapper = () => {
   const [products, setProducts] = useState([]);
+  const [editingProduct, setEditingProduct] = useState(null);
 
-  const addProduct = (product) => {
-    setProducts([
-      ...products,
-      {
-        id: uuidv4(),
-        name: product.name,
-        completed: false,
-        isEditing: false,
-        category: product.category || "",
-        quantity: product.quantity || 1,
-      },
-    ]);
-  };
+  useEffect(() => {
+    getAllProducts(setProducts);
+  }, []);
 
-  const deleteProduct = (id) => setProducts(products.filter((product) => product.id !== id));
-
-  const toggleComplete = (id) => {
-    setProducts(
-      products.map((product) =>
-        product.id === id ? { ...product, completed: !product.completed } : product
-      )
-    );
-  };
-
-  const editProduct = (id) => {
-    setProducts(
-      products.map((product) =>
-        product.id === id ? { ...product, isEditing: !product.isEditing } : product
-      )
-    );
-  };
-
-  const editItem = (item, id) => {
-    setProducts(
-      products.map((product) =>
-        product.id === id ? { ...product, item, isEditing: !product.isEditing } : product
-      )
-    );
+  const handleAddProduct = async (newItem) => {
+    try {
+      if (editingProduct) {
+        console.log("In handleAddProduct newItem: ", newItem);
+        // If editingProduct is present, update the existing product
+        await editProduct(editingProduct._id, newItem, setProducts);
+        setEditingProduct(null); // Clear editingProduct after update
+      } else {
+        // If no editingProduct, add a new product
+        await addProduct(newItem, setProducts);
+      }
+    } catch (error) {
+      console.error("Error adding/updating product:", error);
+    }
   };
 
   return (
     <div className="Wrapper">
       <h1>Shopping list</h1>
-      <Form addProduct={addProduct} />
+      <Form
+        addProduct={handleAddProduct}
+        initialData={editingProduct}
+        setEditingProduct={setEditingProduct}
+      />
       <div className="product-header">
         <span>Nazwa produktu</span>
         <span>Kategoria</span>
         <span>Ilość</span>
       </div>
-      {products.map((product) =>
-        product.isEditing ? (
-          <EditForm editProduct={editItem} item={product} key={product.id} />
-        ) : (
+      {products.map((product) => (
+        <div key={product._id}>
           <Product
-            key={product.id}
             item={product}
-            deletePproduct={deleteProduct}
-            editProduct={editProduct}
-            toggleComplete={toggleComplete}
+            deleteProduct={() => {
+              console.log("Deleting product with id:", product._id);
+              deleteProduct(product._id, setProducts);
+            }}
+            editProduct={() => {
+              console.log("Editing product with id:", product);
+              setEditingProduct(product);
+            }}
           />
-        )
-      )}
+        </div>
+      ))}
       <div className="total">Total: {products.length}</div>
     </div>
   );

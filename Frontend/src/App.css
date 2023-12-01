@@ -130,14 +130,12 @@ h1 {
 .quantity-input:hover {
   border-color: #66ff99;
 }
-.category-info,
-.quantity-info {
+/* .quantity-info {
   margin-left: 10px;
-  font-style: italic;
-}
-.category-info {
+} */
+/* .category-info {
   margin-right: 106px;
-}
+} */
 .product-header {
   display: flex;
   justify-content: left;
@@ -149,4 +147,13 @@ h1 {
 
 .product-header span {
   text-align: center;
+}
+.product-name-container {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+}
+
+.category-info {
+  margin-left: 28px;
 }
