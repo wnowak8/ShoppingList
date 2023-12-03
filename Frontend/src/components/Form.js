@@ -3,17 +3,23 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPlus } from "@fortawesome/free-solid-svg-icons";
 
 export const Form = ({ addProduct, initialData, setEditingProduct }) => {
-  const [name, setName] = useState("");
-  const [category, setCategory] = useState("");
-  const [quantity, setQuantity] = useState(1);
+  const [formData, setFormData] = useState({
+    name: "",
+    category: "",
+    quantity: 1,
+  });
 
   useEffect(() => {
     if (initialData) {
-      setName(initialData.name || "");
-      setCategory(initialData.category || "");
-      setQuantity(initialData.quantity || 1);
+      setFormData({
+        name: initialData.name || "",
+        category: initialData.category || "",
+        quantity: initialData.quantity || 1,
+      });
     }
   }, [initialData]);
+
+  const { name, category, quantity } = formData;
 
   const categoryOptions = ["electronics", "clothing", "groceries"];
 
@@ -21,9 +27,11 @@ export const Form = ({ addProduct, initialData, setEditingProduct }) => {
     e.preventDefault();
     if (name && category) {
       addProduct({ name, category, quantity });
-      setName("");
-      setCategory("");
-      setQuantity(1);
+      setFormData({
+        name: "",
+        category: "",
+        quantity: 1,
+      });
       setEditingProduct(null);
     }
   };
@@ -33,13 +41,13 @@ export const Form = ({ addProduct, initialData, setEditingProduct }) => {
       <input
         type="text"
         value={name}
-        onChange={(e) => setName(e.target.value)}
+        onChange={(e) => setFormData({ ...formData, name: e.target.value })}
         className="name-input"
         placeholder="Add product"
       />
       <select
         value={category}
-        onChange={(e) => setCategory(e.target.value)}
+        onChange={(e) => setFormData({ ...formData, category: e.target.value })}
         className="category-select"
         required
       >
@@ -55,7 +63,12 @@ export const Form = ({ addProduct, initialData, setEditingProduct }) => {
       <input
         type="number"
         value={quantity}
-        onChange={(e) => setQuantity(parseInt(e.target.value, 10))}
+        onChange={(e) =>
+          setFormData({
+            ...formData,
+            quantity: parseInt(e.target.value, 10),
+          })
+        }
         className="quantity-input"
         placeholder="Quantity"
         min="1"

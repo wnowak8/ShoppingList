@@ -32,6 +32,7 @@ const editProduct = async (productId, updatedItem, setProduct) => {
   try {
     const response = await axios.put(URL + `/items/${productId}`, updatedItem);
     const editedProduct = response.data.info;
+    console.log("editProduct - editedProduct:", response);
     setProduct((prevProducts) =>
       prevProducts.map((product) =>
         product._id === productId ? editedProduct : product

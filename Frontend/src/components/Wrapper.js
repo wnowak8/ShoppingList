@@ -19,10 +19,11 @@ export const Wrapper = () => {
   const handleAddProduct = async (newItem) => {
     try {
       if (editingProduct) {
-        console.log("In handleAddProduct newItem: ", newItem);
+        console.log("In handleAddProduct newItem: ", editingProduct);
         // If editingProduct is present, update the existing product
         await editProduct(editingProduct._id, newItem, setProducts);
         setEditingProduct(null); // Clear editingProduct after update
+
       } else {
         // If no editingProduct, add a new product
         await addProduct(newItem, setProducts);
@@ -45,12 +46,12 @@ export const Wrapper = () => {
         <span>Kategoria</span>
         <span>Ilość</span>
       </div>
+      {console.log('Products:', products)}
       {products.map((product) => (
         <div key={product._id}>
           <Product
             item={product}
             deleteProduct={() => {
-              console.log("Deleting product with id:", product._id);
               deleteProduct(product._id, setProducts);
             }}
             editProduct={() => {

@@ -36,7 +36,7 @@ exports.items_get_by_id = async (req, res, next) => {
 
   try {
     const result = await Item.findById(itemId);
-    
+
     if (!result) {
       return res.status(404).json({ message: "Item not found" });
     }
@@ -60,10 +60,13 @@ exports.items_change = async (req, res, next) => {
   };
   try {
     const result = await Item.findByIdAndUpdate(id, updateItem);
+    updateItem._id = id
     if (!result) {
       return res.status(404).json({ message: "Item not found" });
     }
-    res.status(200).json({ message: "Update item with ID: " + id });
+    res
+      .status(200)
+      .json({ message: "Update item with ID: " + id, info: updateItem });
   } catch (err) {
     console.error(err);
     res.status(500).json({ error: err.message });
