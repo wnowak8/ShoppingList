@@ -1,0 +1,111 @@
+* {
+  font-family: "Poppins", sans-serif;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  color: #fff;
+}
+body {
+  /* background: #66ff99; */
+  /* fallback for old browsers */
+  background: #6a11cb;
+  /* Chrome 10-25, Safari 5.1-6 */
+  background: -webkit-linear-gradient(
+    to right,
+    rgba(106, 17, 203, 1),
+    rgba(37, 117, 252, 1)
+  );
+  /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+  background: linear-gradient(
+    to right,
+    rgba(106, 17, 203, 1),
+    rgba(37, 117, 252, 1)
+  );
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.LoginSignup {
+  margin-top: 5rem;
+  display: flex;
+  flex-direction: column;
+  background: #1a1a40;
+  width: 600px;
+  padding: 2rem;
+  border-radius: 5px;
+}
+
+.header {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  width: 100%;
+  margin-top: 30px;
+
+}
+.text{
+      font-size: 48px;
+      font-weight: 700;
+}
+
+.underline{
+      width: 175px;
+      height: 5px;
+      background-color: #66ff99;
+      border-radius: 10px;
+}
+
+.inputs{
+      margin-top: 55px;
+      display: flex;
+      flex-direction: column;
+      gap: 25px;
+}
+.input{
+      display: flex;
+      align-items: center;
+      margin: auto;
+      width: 480px;
+      height: 80px;
+      background: #eaeaea;
+      border-radius: 5px;
+}
+.input img{
+      margin: 0px 30px;
+}
+
+.input input{
+      height: 50px;
+      width: 400px;
+      background: transparent;
+      border: none;
+      outline: none;
+      color: #797979;
+      font-size: 19px;
+
+}
+
+.sub-container{
+      display: flex;
+      gap: 30px;
+      margin: 60px auto;   
+}
+.submit{
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      width: 220px;
+      height: 60px;
+      background-color: #66ff99;
+      border-radius: 50px;
+      font-size: 19px;
+      font-weight: 700;
+      cursor: pointer;
+}
+
+.gray{
+      background: #eaeaea;
+      color: #676767;
+}
