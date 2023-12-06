@@ -1,15 +1,26 @@
+import React, { useState } from "react";
+import { LoginSignup } from "./components/LoginSignup";
+import { Wrapper } from "./components/Wrapper";
+
 import './App.css';
 import './LoginSignup.css';
-import { Wrapper } from './components/Wrapper';
-import { LoginSignup } from './components/LoginSignup';
 
-function App() {
+const App = () => {
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+
+  const handleLogin = () => {
+    setIsLoggedIn(true);
+  };
+
   return (
     <div className="App">
-      <Wrapper  />
-      {/* <LoginSignup  /> */}
+      {isLoggedIn ? (
+        <Wrapper />
+      ) : (
+        <LoginSignup onLogin={handleLogin} />
+      )}
     </div>
   );
-}
+};
 
 export default App;

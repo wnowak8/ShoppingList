@@ -1,11 +1,38 @@
-// import { Wrapper } from './components/Wrapper';
-
-import { useState } from "react";
+import React, { useState } from "react";
 import email_icon from "./asserts/email.png";
 import password_icon from "./asserts/password.png";
-export const LoginSignup = () => {
+import axios from "axios"; // Import axios for making HTTP requests
 
-const [action, setAction] = useState("Sign Up");
+export const LoginSignup = ({ onLogin }) => {
+  const [action, setAction] = useState("Sign Up");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+
+  const handleLogin = async () => {
+    try {
+      const response = await axios.post("/login", {
+        email: email,
+        password: password,
+      });
+      onLogin();
+    } catch (error) {
+      console.error("Login failed:", error);
+    }
+  };
+
+  const handleSignup = async () => {
+    try {
+      const response = await axios.post("/signup", {
+        email: email,
+        password: password,
+      });
+
+      handleLogin();
+    } catch (error) {
+      console.error("Sign-up failed:", error);
+    }
+  };
+
   return (
     <div className="LoginSignup">
       <div className="header">
@@ -14,17 +41,43 @@ const [action, setAction] = useState("Sign Up");
       </div>
       <div className="inputs">
         <div className="input">
-          <img src={email_icon} alt=""></img>
-          <input type="email" placeholder="Email" />
+          <img src={email_icon} alt="Email icon"></img>
+          <input
+            type="email"
+            placeholder="Email"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+          />
         </div>
         <div className="input">
-          <img src={password_icon} alt=""></img>
-          <input type="password" placeholder="Password" />
+          <img src={password_icon} alt="Password icon"></img>
+          <input
+            type="password"
+            placeholder="Password"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+          />
         </div>
       </div>
       <div className="sub-container">
-        <div className={action==="Login"?"submit gray":"submit"} onClick={()=>{setAction("Sign Up")}}>Sign Up</div>
-        <div className={action==="Sign Up"?"submit gray":"submit"} onClick={()=>{setAction("Login")}}>Login</div>
+        <div
+          className={action === "Login" ? "submit gray" : "submit"}
+          onClick={() => {
+            setAction("Sign Up");
+            handleSignup();
+          }}
+        >
+          Sign Up
+        </div>
+        <div
+          className={action === "Sign Up" ? "submit gray" : "submit"}
+          onClick={() => {
+            setAction("Login");
+            handleLogin();
+          }}
+        >
+          Login
+        </div>
       </div>
     </div>
   );
