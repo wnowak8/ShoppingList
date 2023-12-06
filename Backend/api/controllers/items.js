@@ -22,7 +22,7 @@ exports.items_add_new = async (req, res, next) => {
     const savedItem = await newItem.save();
 
     res.status(201).json({
-      message: "Product added successfully",
+      message: "Item added successfully",
       info: savedItem,
     });
   } catch (error) {

@@ -8,7 +8,7 @@ import {
   deleteProduct,
 } from "../utils/HandleApi";
 
-export const Wrapper = () => {
+export const Wrapper = ({ onLogout }) => {
   const [products, setProducts] = useState([]);
   const [editingProduct, setEditingProduct] = useState(null);
 
@@ -20,12 +20,9 @@ export const Wrapper = () => {
     try {
       if (editingProduct) {
         console.log("In handleAddProduct newItem: ", editingProduct);
-        // If editingProduct is present, update the existing product
         await editProduct(editingProduct._id, newItem, setProducts);
-        setEditingProduct(null); // Clear editingProduct after update
-
+        setEditingProduct(null);
       } else {
-        // If no editingProduct, add a new product
         await addProduct(newItem, setProducts);
       }
     } catch (error) {
@@ -33,20 +30,33 @@ export const Wrapper = () => {
     }
   };
 
+  const handleLogout = () => {
+    localStorage.removeItem('token');
+    onLogout();
+    console.log("Logout successful");
+  };
+
   return (
     <div className="Wrapper">
-      <h1>Shopping list</h1>
-      <Form
-        addProduct={handleAddProduct}
-        initialData={editingProduct}
-        setEditingProduct={setEditingProduct}
-      />
-      <div className="product-header">
-        <span>Nazwa produktu</span>
-        <span>Kategoria</span>
-        <span>Ilość</span>
+      <nav className="navbar">
+        <button className="logout-button" onClick={handleLogout}>
+          Logout
+        </button>
+      </nav>
+      <div className="app-header">
+        <h1>Shopping list</h1>
+        <Form
+          addProduct={handleAddProduct}
+          initialData={editingProduct}
+          setEditingProduct={setEditingProduct}
+        />
       </div>
-      {console.log('Products:', products)}
+      <div className="product-header">
+        <span>Name</span>
+        <span className="category-span">Category</span>
+        <span className="quantity-span">Quantity</span>
+      </div>
+      {console.log("Products:", products)}
       {products.map((product) => (
         <div key={product._id}>
           <Product

@@ -32,6 +32,12 @@ h1 {
   font-weight: 700;
 }
 
+.app-header{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
 .Wrapper {
   background: #1a1a40;
   margin-top: 5rem;
@@ -149,16 +155,20 @@ h1 {
 .product-header {
   display: flex;
   justify-content: left;
-  gap: 100px;
+  gap: 160px;
   font-weight: bold;
-  padding: 5px 0;
+  padding: 5px;
   border-bottom: 1px solid #ccc;
   margin-bottom: 20px;
 }
 
-.product-header span {
-  text-align: center;
+.category-span {
+  margin-left: 30px; 
 }
+.quantity-span {
+  margin-left: -60px;
+}
+
 .product-name-container {
   display: flex;
   justify-content: space-between;
@@ -169,4 +179,31 @@ h1 {
 strong{
   width: 100px;
   text-align: left;
+}
+
+.navbar {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  padding: 10px;
+  background-color: rgba(255, 255, 255, 0);
+  position: fixed;
+  width: 100%;
+  top: 0;
+  left: 0;
+  z-index: 1000;
+}
+
+.logout-button {
+  background-color: #1a1a40;
+  color: #fff;
+  padding: 8px 16px;
+  border: none;
+  cursor: pointer;
+  border-radius: 4px;
+  margin-left: 30px;
+}
+
+.logout-button:hover {
+  background-color: #1a1a40d0;
 }

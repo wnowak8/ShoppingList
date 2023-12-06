@@ -6,8 +6,6 @@ const getAllProducts = (setProduct) => {
   axios
     .get(URL + "/items")
     .then(({ data }) => {
-      console.log("data:", data);
-
       const items = data.info || [];
 
       setProduct(items);
@@ -19,7 +17,19 @@ const getAllProducts = (setProduct) => {
 
 const addProduct = async (newItem, setProduct) => {
   try {
-    const response = await axios.post(URL + "/items", newItem);
+    const token = localStorage.getItem("token");
+
+    if (!token) {
+      console.error("Unauthorized: User not logged in");
+      return;
+    }
+
+    const response = await axios.post(URL + "/items", newItem, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+
     const addedProduct = response.data.info;
     setProduct((prevProducts) => [...prevProducts, addedProduct]);
   } catch (error) {
@@ -30,9 +40,20 @@ const addProduct = async (newItem, setProduct) => {
 
 const editProduct = async (productId, updatedItem, setProduct) => {
   try {
-    const response = await axios.put(URL + `/items/${productId}`, updatedItem);
+    const token = localStorage.getItem("token");
+
+    if (!token) {
+      console.error("Unauthorized: User not logged in");
+      return;
+    }
+
+    const response = await axios.put(URL + `/items/${productId}`, updatedItem, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+
     const editedProduct = response.data.info;
-    console.log("editProduct - editedProduct:", response);
     setProduct((prevProducts) =>
       prevProducts.map((product) =>
         product._id === productId ? editedProduct : product
@@ -44,11 +65,21 @@ const editProduct = async (productId, updatedItem, setProduct) => {
   }
 };
 
-
-
 const deleteProduct = async (productId, setProduct) => {
   try {
-    await axios.delete(URL + `/items/${productId}`);
+    const token = localStorage.getItem("token");
+
+    if (!token) {
+      console.error("Unauthorized: User not logged in");
+      return;
+    }
+
+    await axios.delete(URL + `/items/${productId}`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+
     setProduct((prevProducts) =>
       prevProducts.filter((product) => product._id !== productId)
     );
@@ -58,5 +89,37 @@ const deleteProduct = async (productId, setProduct) => {
   }
 };
 
+const signup = async (email, password) => {
+  try {
+    const response = await axios.post(URL + "/users/signup", {
+      email: email,
+      password: password,
+    });
+    return response.data;
+  } catch (error) {
+    console.error("Error during signup:", error);
+    return Promise.reject(error);
+  }
+};
 
-export { getAllProducts, addProduct, deleteProduct, editProduct };
+const login = async (email, password) => {
+  try {
+    const response = await axios.post(URL + "/users/login", {
+      email: email,
+      password: password,
+    });
+    return response.data;
+  } catch (error) {
+    console.error("Error during login:", error);
+    return Promise.reject(error);
+  }
+};
+
+export {
+  getAllProducts,
+  addProduct,
+  deleteProduct,
+  editProduct,
+  signup,
+  login,
+};

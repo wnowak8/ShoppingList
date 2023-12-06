@@ -15,7 +15,6 @@ export const Product = ({ item, deleteProduct, editProduct }) => {
           className="edit-icon"
           icon={faPenToSquare}
           onClick={() => {
-            console.log("Product - Editing product with id:", item._id);
             editProduct(item._id);
           }}
         />
@@ -23,7 +22,6 @@ export const Product = ({ item, deleteProduct, editProduct }) => {
           className="delete-icon"
           icon={faTrash}
           onClick={() => {
-            console.log("Deleting product with id:", item._id);
             deleteProduct(item._id);
           }}
         />

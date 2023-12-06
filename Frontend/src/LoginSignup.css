@@ -90,7 +90,7 @@ body {
 .sub-container{
       display: flex;
       gap: 30px;
-      margin: 60px auto;   
+      margin: 30px auto;   
 }
 .submit{
       display: flex;
@@ -109,3 +109,25 @@ body {
       background: #eaeaea;
       color: #676767;
 }
+
+.error-message {
+      background-color: #ffcccc;
+      color: #cc0000;
+      padding: 10px;
+      margin: 10px 28px 0px 28px;
+      border: 1px solid #cc0000;
+      border-radius: 5px;
+      width: 480px;
+      display: flex;
+    }
+    
+    .success-message {
+      background-color: #ccffcc;
+      color: #008000;
+      padding: 10px;
+      margin: 10px 28px 0px 28px;
+      border: 1px solid #008000;
+      border-radius: 5px;
+      width: 480px;
+      display: flex;
+    }
